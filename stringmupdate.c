@@ -338,3 +338,4 @@ void write_file(char string[])
     }
     fclose(file_pointer);
 }
+//gitti testaus (ignore)
