@@ -8,3 +8,4 @@
 6. "git remote add origin "URL"" links local repo to remote repo.
 7. "git init" initizes your local folder to repository
 8. "git clone" clones remote repo to local computer
+https://git.vamk.fi/e2203113/app_project.git
