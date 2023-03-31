@@ -6,3 +6,4 @@
 4. "git push origin master" pushes changes to "git cloud exmp. github"
 5. "git restore FILE"  undos modifications
 6. "git remote add origin "URL"" links local repo to remote repo.
+7. "git init" initizes your local folder to repository
