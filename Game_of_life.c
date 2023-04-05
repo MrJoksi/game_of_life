@@ -40,7 +40,15 @@ void life_calculate(struct cell table[9][9]){
                  {
                     n+=board[a][b].current;
                  }
-              }  
+              }
+              if(n >= 4){
+                  table[i][j].future = 0;
+              } 
+              if (n <= 1)
+              {
+                  table[i][j].future = 0;
+              }
+               
           }
         }
         
