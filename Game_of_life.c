@@ -10,12 +10,14 @@ void life_calculate(struct cell table[9][9]);
 
 int main(void){
 
-    struct cell board[9][9] = {0,0};
-    life_cell(board);
-    life_calculate(board);
+    struct cell table[9][9] = {0,0};
+    life_cell(table);
+    life_calculate(table);
 }
 void life_cell(struct cell table[9][9]){
     table[4][4].current = 1;  
+    table[4][5].current = 1;
+    table[5][4].current = 1;
     for (int i = 0; i < 9; i++)
     {
         for (int j = 0; j < 9; j++)
@@ -27,6 +29,7 @@ void life_cell(struct cell table[9][9]){
     
 }
 void life_calculate(struct cell table[9][9]){
+
     for (int i = 0; i < 9; i++)
     {
         for (int j = 0; j < 9; j++)
@@ -36,7 +39,7 @@ void life_calculate(struct cell table[9][9]){
             {
                  for(int b = j - 1; b <= j + 1; j++)
                  {
-                    n+=board[a][b].current;
+                    n+=table[a][b].current;
                  }
 
                 if(table[i][j].current == 1)
@@ -52,7 +55,7 @@ void life_calculate(struct cell table[9][9]){
                 }  
 
                 //else if jotta ymmärrän mitä teen
-                else if(table[i][j] == 0)
+                else if(table[i][j].current == 0)
                 {
                      if (n == 3)
                     {
