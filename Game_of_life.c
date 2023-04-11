@@ -32,26 +32,37 @@ void life_calculate(struct cell table[9][9]){
         for (int j = 0; j < 9; j++)
         {
             int n = 0;
-          if(table[i][j].current == 1)
-          {
-              for (int a = i - 1; a <= i + 1; a++)
-              {
+            for (int a = i - 1; a <= i + 1; a++)
+            {
                  for(int b = j - 1; b <= j + 1; j++)
                  {
                     n+=board[a][b].current;
                  }
-              }
-              if(n >= 4){
-                  table[i][j].future = 0;
-              } 
-              if (n <= 1)
-              {
-                  table[i][j].future = 0;
-              }
-               
-          }
-        }
+
+                if(table[i][j].current == 1)
+                {
+                    if(n >= 4)
+                    {
+                        table[i][j].future = 0;
+                    } 
+                    else if (n <= 1)
+                    {
+                        table[i][j].future = 0;
+                    }
+                }  
+
+                //else if jotta ymmärrän mitä teen
+                else if(table[i][j] == 0)
+                {
+                     if (n == 3)
+                    {
+                    table[i][j].future = 1;
+                    }
+                }
+            
+            }
         
     }
     
+}
 }
