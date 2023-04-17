@@ -36,23 +36,35 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-    struct cell{
+#include <time.h>
+/*-------------------------------------------------------------------*
+*    GLOBAL VARIABLES AND CONSTANTS                                  *
+*--------------------------------------------------------------------*/
+#define BOARD_SIZE 11
+#define GAME_SIZE 9
+   struct cell{
     int future;
     int current;
     };
-void life_cell(struct cell table[9][9]);
-void life_calculate(struct cell table[9][9]);
-
+/*-------------------------------------------------------------------*
+*    FUNCTION PROTOTYPES                                             *
+*--------------------------------------------------------------------*/
+void life_cell(struct cell table[BOARD_SIZE][BOARD_SIZE],int amount);
+void life_calculate(struct cell table[BOARD_SIZE][BOARD_SIZE]);
+/*********************************************************************
+*    MAIN PROGRAM                                                      *
+**********************************************************************/
 int main(void){
 
-    struct cell table[9][9] = {0,0};
-    life_cell(table);
-    life_calculate(table);
-}
-void life_cell(struct cell table[9][9]){
-    table[4][4].current = 1;  
-    table[4][5].current = 1;
-    table[5][4].current = 1;
+    struct cell table[BOARD_SIZE][BOARD_SIZE] = {0,0};
+    int amount;
+    printf("Enter the number of live cells: ");
+    scanf("%d", &amount);
+    life_cell(table, amount);
+    
+    while(1){
+        system("clear");
+        
     for (int i = 0; i < 9; i++)
     {
         for (int j = 0; j < 9; j++)
@@ -61,13 +73,56 @@ void life_cell(struct cell table[9][9]){
         }
         printf("\n");
     }
-    
+    usleep(500000);
+    life_calculate(table);
+    }
 }
-void life_calculate(struct cell table[9][9]){
 
+/*********************************************************************
+*    FUNCTIONS                                                       *
+**********************************************************************/
+
+/*********************************************************************
+ NAME:
+ DESCRIPTION:
+	Input:
+	Output:
+  Used global variables:
+ REMARKS when using this function:
+*********************************************************************/
+void life_cell(struct cell table[BOARD_SIZE][BOARD_SIZE], int amount){
+    /*int x, y;
+    for (int i = 0; i < amount; i++) {
+        printf("Enter coordinates for cell %d in the form 'x y': ", i+1);
+        scanf("%d %d", &x, &y);
+        table[x][y].current = 1;
+        
+    }*/
+    table[3][3].current = 1;
+    table[4][3].current = 1;
+    table[4][4].current = 1;
     for (int i = 0; i < 9; i++)
     {
         for (int j = 0; j < 9; j++)
+        {
+          printf("%d ",table[i][j].current);  
+        }
+        printf("\n");}
+}
+
+/*********************************************************************
+ NAME:
+ DESCRIPTION:
+	Input:
+	Output:
+  Used global variables:
+ REMARKS when using this function:
+*********************************************************************/
+void life_calculate(struct cell table[BOARD_SIZE][BOARD_SIZE]){
+
+    for (int i = 1; i < GAME_SIZE; i++)
+    {
+        for (int j = 1; j < GAME_SIZE; j++)
         {
             int n = 0;
             int a = 0;
@@ -83,17 +138,21 @@ void life_calculate(struct cell table[9][9]){
                  }
             }
 
-                if(table[i][j].current == 1)
+            if(table[i][j].current == 1)
+            {
+                n -= 1;
+                if(n > 3)
                 {
-                    if(n >= 4)
-                    {
-                        table[i][j].future = 0;
-                    } 
-                    else if (n <= 1)
-                    {
-                        table[i][j].future = 0;
-                    }
-                }  
+                    table[i][j].future = 0;
+                } 
+                 else if (n < 2)
+                {
+                     table[i][j].future = 0;
+                }
+                else{
+                    table[i][j].future = 1;
+                }
+            }  
 
                 //else if jotta ymmärrän mitä teen
             else if(table[i][j].current == 0)
@@ -101,12 +160,13 @@ void life_calculate(struct cell table[9][9]){
                 if (n == 3)
                 {
                     table[i][j].future = 1;
-                    }
                 }
-            
+                else{
+                    table[i][j].future = 0;
+                }
             }
-        
+            table[i][j].current = table[i][j].future;
+        }
     }
     
-}
 }
