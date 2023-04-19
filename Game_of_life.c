@@ -36,6 +36,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 /*-------------------------------------------------------------------*
 *    GLOBAL VARIABLES AND CONSTANTS                                  *
 *--------------------------------------------------------------------*/
@@ -48,7 +49,7 @@
 /*-------------------------------------------------------------------*
 *    FUNCTION PROTOTYPES                                             *
 *--------------------------------------------------------------------*/
-void life_cell(struct cell table[BOARD_SIZE][BOARD_SIZE]);
+void life_cell(struct cell table[BOARD_SIZE][BOARD_SIZE],int amount);
 void life_calculate(struct cell table[BOARD_SIZE][BOARD_SIZE]);
 /*********************************************************************
 *    MAIN PROGRAM                                                      *
@@ -56,8 +57,14 @@ void life_calculate(struct cell table[BOARD_SIZE][BOARD_SIZE]);
 int main(void){
 
     struct cell table[BOARD_SIZE][BOARD_SIZE] = {0,0};
-    life_cell(table);
-    life_calculate(table);
+    int amount;
+    printf("Enter the number of live cells: ");
+    scanf("%d", &amount);
+    life_cell(table, amount);
+    
+    while(1){
+        system("clear");
+        
     for (int i = 0; i < 9; i++)
     {
         for (int j = 0; j < 9; j++)
@@ -66,6 +73,9 @@ int main(void){
         }
         printf("\n");
     }
+    usleep(500000);
+    life_calculate(table);
+    }
 }
 
 /*********************************************************************
@@ -73,34 +83,38 @@ int main(void){
 **********************************************************************/
 
 /*********************************************************************
- NAME:
- DESCRIPTION:
-	Input:
+ NAME:life_cell
+ DESCRIPTION:asks user place of cells
+	Input:table[BOARD_SIZE][BOARD_SIZE]
 	Output:
-  Used global variables:
+  Used global variables: BOARD_SIZE
  REMARKS when using this function:
 *********************************************************************/
-void life_cell(struct cell table[BOARD_SIZE][BOARD_SIZE]){
-    table[4][4].current = 1;  
-    table[4][5].current = 1;
-    table[5][4].current = 1;
-    for (int i = 0; i < GAME_SIZE; i++)
+void life_cell(struct cell table[BOARD_SIZE][BOARD_SIZE], int amount){
+    int x, y;
+    for (int i = 0; i < amount; i++) {
+        printf("Enter coordinates for cell %d in the form 'x y': ", i+1);
+        scanf("%d %d", &x, &y);
+        table[x][y].current = 1;
+        
+    }
+    
+    
+    for (int i = 0; i < 9; i++)
     {
-        for (int j = 0; j < GAME_SIZE; j++)
+        for (int j = 0; j < 9; j++)
         {
           printf("%d ",table[i][j].current);  
         }
-        printf("\n");
-    }
-    
+        printf("\n");}
 }
 
 /*********************************************************************
- NAME:
- DESCRIPTION:
-	Input:
-	Output:
-  Used global variables:
+ NAME:life_calculate
+ DESCRIPTION:caculates neigbourgh cells
+	Input:table[BOARD_SIZE][BOARD_SIZE]
+	Output:NONE
+  Used global variables:BOARD_SIZE , GAME_SIZE
  REMARKS when using this function:
 *********************************************************************/
 void life_calculate(struct cell table[BOARD_SIZE][BOARD_SIZE]){
@@ -110,9 +124,11 @@ void life_calculate(struct cell table[BOARD_SIZE][BOARD_SIZE]){
         for (int j = 1; j < GAME_SIZE; j++)
         {
             int n = 0;
-            for (int a = i - 1; a <= i + 1; a++)
+            int a = 0;
+            for (a = i - 1; a <= i + 1; a++)
             {
-                 for(int b = j - 1; b <= j + 1; j++)
+                int b = 0;
+                 for(b = j - 1; b <= j + 1; b++)
                  {
                     if(table[a][b].current == 1)
                     {
@@ -123,13 +139,17 @@ void life_calculate(struct cell table[BOARD_SIZE][BOARD_SIZE]){
 
             if(table[i][j].current == 1)
             {
-                if(n >= 4)
+                n -= 1;
+                if(n > 3)
                 {
                     table[i][j].future = 0;
                 } 
-                 else if (n <= 1)
+                 else if (n < 2)
                 {
                      table[i][j].future = 0;
+                }
+                else if (n == 2 || n == 3){
+                    table[i][j].future = 1;
                 }
             }  
 
@@ -139,6 +159,9 @@ void life_calculate(struct cell table[BOARD_SIZE][BOARD_SIZE]){
                 if (n == 3)
                 {
                     table[i][j].future = 1;
+                }
+                else{
+                    table[i][j].future = 0;
                 }
             }
             table[i][j].current = table[i][j].future;
