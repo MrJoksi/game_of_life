@@ -91,15 +91,26 @@ int main(void){
  REMARKS when using this function:
 *********************************************************************/
 void life_cell(struct cell table[BOARD_SIZE][BOARD_SIZE], int amount){
+<<<<<<< HEAD
     int x, y;
+=======
+    /*int x, y;
+>>>>>>> 290a6927b367fbf78cb8dec3ecac33704867fb09
     for (int i = 0; i < amount; i++) {
         printf("Enter coordinates for cell %d in the form 'x y': ", i+1);
         scanf("%d %d", &x, &y);
         table[x][y].current = 1;
         
+<<<<<<< HEAD
     }
     
     
+=======
+    }*/
+    table[3][3].current = 1;
+    table[4][3].current = 1;
+    table[4][4].current = 1;
+>>>>>>> 290a6927b367fbf78cb8dec3ecac33704867fb09
     for (int i = 0; i < 9; i++)
     {
         for (int j = 0; j < 9; j++)
@@ -148,7 +159,11 @@ void life_calculate(struct cell table[BOARD_SIZE][BOARD_SIZE]){
                 {
                      table[i][j].future = 0;
                 }
+<<<<<<< HEAD
                 else if (n == 2 || n == 3){
+=======
+                else{
+>>>>>>> 290a6927b367fbf78cb8dec3ecac33704867fb09
                     table[i][j].future = 1;
                 }
             }  
@@ -168,4 +183,4 @@ void life_calculate(struct cell table[BOARD_SIZE][BOARD_SIZE]){
         }
     }
     
-}
+}}
