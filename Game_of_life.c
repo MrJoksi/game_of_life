@@ -41,10 +41,14 @@
 **********************************************************************/
 int main(void){
 
-    struct cell table[BOARD_SIZE][BOARD_SIZE] = {0,0};
+    struct cell table[ROWS + 2][COLUMNS + 2] = {0,0};
     int amount;
-    printf("Enter the number of live cells: ");
-    scanf("%d", &amount);
+    initscr();
+    clear();
+    start_color();
+    init_pair(1, COLOR_GREEN, COLOR_WHITE)
+    printw("Enter the number of live cells: ");
+    scanw("%d", &amount);
     life_cell(table, amount);
     
     while(1){

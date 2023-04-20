@@ -7,7 +7,7 @@
   Used global variables: BOARD_SIZE
  REMARKS when using this function:
 *********************************************************************/
-void life_cell(struct cell table[BOARD_SIZE][BOARD_SIZE], int amount){
+void life_cell(struct cell table[ROWS][COLUMNS], int amount){
 
     int x, y;
     for (int i = 0; i < amount; i++) {
