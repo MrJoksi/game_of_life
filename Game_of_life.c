@@ -39,32 +39,42 @@
 /*********************************************************************
 *    MAIN PROGRAM                                                      *
 **********************************************************************/
-int main(void){
+int main(){
 
-    struct cell table[ROWS + 2][COLUMNS + 2] = {0,0};
+    struct cell table[ROWS][COLUMNS] = {0,0};
     int amount;
+    char ab;
     initscr();
     clear();
-    start_color();
-    init_pair(1, COLOR_GREEN, COLOR_WHITE)
-    printw("Enter the number of live cells: ");
-    scanw("%d", &amount);
-    life_cell(table, amount);
+    printw("Read from file: A \nInput cells: B \nWhat to do: ");
+    scanw("%c", %ab);
+    if (ab == 'B' || ab == 'b')
+      {
+        refresh();
+        printw("Enter the number of live cells: ");
+        scanw("%d", &amount);
+        life_cell(table, amount);
+      }
+    else if (ab == 'A' || ab == 'a')
+    {
+      file_read(table);
+    }
     
     while(1){
-        system("cls");
         
-    for (int i = 0; i < ROWS; i++)
+    for (int i = 1; i < ROWS; i++)
     {
-        for (int j = 0; j < COLUMNS; j++)
+        for (int j = 1; j < COLUMNS; j++)
         {
-          printf("%d ",table[i][j].current);  
+          printf("%d ", table[i][j].current);
         }
         printf("\n");
     }
     
-    usleep(500000);
+    usleep(5000000);
     life_calculate(table);
     }
+    getch();
+    endwin();
 }
 

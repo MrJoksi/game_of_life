@@ -17,9 +17,9 @@ void life_cell(struct cell table[ROWS][COLUMNS], int amount){
         
 
     }
-    for (int i = 0; i < ROWS; i++)
+    for (int i = 1; i < ROWS - 1; i++)
     {
-        for (int j = 0; j < COLUMNS; j++)
+        for (int j = 1; j < COLUMNS - 1; j++)
         {
           printf("%d ",table[i][j].current);  
         }
@@ -34,30 +34,19 @@ void life_cell(struct cell table[ROWS][COLUMNS], int amount){
   Used global variables:BOARD_SIZE , GAME_SIZE
  REMARKS when using this function:
 *********************************************************************/
-void life_calculate(struct cell table[BOARD_SIZE][BOARD_SIZE]){
-
-    for (int i = 1; i <= ROWS; i++)
+void life_calculate(struct cell table[ROWS][COLUMNS]){
+    
+    for (int i = 1; i < ROWS - 1; i++)
     {
-        for (int j = 1; j <= COLUMNS; j++)
+        for (int j = 1; j <= COLUMNS - 1; j++)
         {
-            int n = 0;
-            int a = 0;
-            for (a = i - 1; a <= i + 1; a++)
-            {
-                int b = 0;
-                 for(b = j - 1; b <= j + 1; b++)
-                 {
-                    if(table[a][b].current == 1)
-                    {
-                        n+=1;
-                    }
-                 }
-            }
-
+           
+           int n = 0; 
+            n = table[i+1][j-1].current + table[i+1][j].current + table[i+1][j+1].current + table[i][j-1].current + table[i][j+1].current + table[i-1][j-1].current + table[i-1][j].current + table[i-1][j+1].current;
+                
 
             if(table[i][j].current == 1)
             {
-                n -= 1;
                 if(n > 3)
                 {
                     table[i][j].future = 0;
@@ -72,8 +61,57 @@ void life_calculate(struct cell table[BOARD_SIZE][BOARD_SIZE]){
                 }
             }  
 
-                //else if jotta ymmärrän mitä teen
             else if(table[i][j].current == 0)
+            {
+                if (n == 3)
+                {
+                    table[i][j].future = 1;
+                }
+                else{
+                    table[i][j].future = 0;
+                }
+            }
+        }
+    }
+    
+    for (int i = 1; i < ROWS - 1; i++)
+    {
+        for (int j = 1; j <= COLUMNS - 1; j++)
+        {
+        table[i][j].current = table[i][j].future;
+        }
+    }
+}
+/*int a = 0;
+            for (a = i - 1; a <= i + 1; a++)
+            {
+                int b = 0;
+                 for(b = j - 1; b <= j + 1; b++)
+                 {
+                    if(table[a][b].current == 1)
+                    {
+                        n+=1;
+                    }
+                 }
+            }
+
+if(table[i][j].current == 1)
+            {
+                n -= 1;
+                if(n > 3)
+                {
+                    table[i][j].future = 0;
+                } 
+                 else if (n < 2)
+                {
+                     table[i][j].future = 0;
+                }
+                else if (n == 2 || n == 3){
+
+                    table[i][j].future = 1;
+                }
+            } 
+else if(table[i][j].current == 0)
             {
                 if (n == 3)
                 {
@@ -86,5 +124,8 @@ void life_calculate(struct cell table[BOARD_SIZE][BOARD_SIZE]){
             table[i][j].current = table[i][j].future;
         }
     }
-    
-}
+
+
+
+
+*/

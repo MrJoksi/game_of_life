@@ -8,7 +8,7 @@
 *    GLOBAL VARIABLES AND CONSTANTS                                  *
 *--------------------------------------------------------------------*/
 #define BOARD_SIZE 32
-#define ROWS 8
+#define ROWS 10
 #define COLUMNS 24
 #define GAME_SIZE BOARD_SIZE-2
    struct cell{
@@ -18,5 +18,8 @@
 /*-------------------------------------------------------------------*
 *    FUNCTION PROTOTYPES                                             *
 *--------------------------------------------------------------------*/
-void life_cell(struct cell table[BOARD_SIZE][BOARD_SIZE],int amount);
-void life_calculate(struct cell table[BOARD_SIZE][BOARD_SIZE]);
+int file_read(struct cell table[ROWS][COLUMNS]);
+
+void life_cell(struct cell table[ROWS][COLUMNS],int amount);
+
+void life_calculate(struct cell table[ROWS][COLUMNS]);
