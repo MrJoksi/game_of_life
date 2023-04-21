@@ -11,11 +11,20 @@ void life_cell(struct cell table[ROWS][COLUMNS], int amount){
 
     int x, y;
     for (int i = 0; i < amount; i++) {
-        printw("Enter coordinates for cell %d in the form 'x y': ", i+1);
+        move(3,10);
+        refresh();
+        printw("Enter coordinates for cell %d", i+1);
+        move(4,10);
+        printw("in the form 'x y': ");
+        refresh();
         scanw("%d %d", &x, &y);
+        refresh();
+        move(3,10);
+        printw("                                  ");
+        move(4,10);
+        printw("                                    ");
+        refresh();
         table[x][y].current = 1;
-        
-
     }
     for (int i = 1; i < ROWS - 1; i++)
     {
