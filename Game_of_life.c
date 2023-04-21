@@ -46,11 +46,26 @@ int main(){
     char ab;
     initscr();
     clear();
-    printw("Read from file: A \nInput cells: B \nWhat to do: ");
+    init_pair(1,COLOR_WHITE,COLOR_BLACK);
+    init_pair(2,COLOR_RED,COLOR_GREEN);
+    bkgd(COLOR_PAIR(1));
+    move(2,10);
+    printw("Read from file: A ");
+    move(3,10);
+    printw("Input cells: B");
+    move(3,10);
+    printw("What to do: ");
+    refresh();
     scanw("%c", %ab);
+    printw("                  ");
+    move(3,10);
+    printw("                  ");
+    move(3,10);
+    printw("                  ");
+    refresh();
     if (ab == 'B' || ab == 'b')
       {
-        refresh();
+        
         printw("Enter the number of live cells: ");
         scanw("%d", &amount);
         life_cell(table, amount);
@@ -61,20 +76,30 @@ int main(){
     }
     
     while(1){
+      curs_set(0);
+      
         
     for (int i = 1; i < ROWS; i++)
     {
         for (int j = 1; j < COLUMNS; j++)
         {
-          printf("%d ", table[i][j].current);
+          if(table[i][j].current == 1){
+          printw("#");
+          }
+          else{
+            printw(" ");
+          }
         }
-        printf("\n");
+        printw("\n");
     }
     
     usleep(5000000);
     life_calculate(table);
+    
+
     }
-    getch();
+    nodelay(stdscr, FALSE);
+    getch();  
     endwin();
 }
 

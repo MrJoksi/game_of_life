@@ -11,8 +11,8 @@ void life_cell(struct cell table[ROWS][COLUMNS], int amount){
 
     int x, y;
     for (int i = 0; i < amount; i++) {
-        printf("Enter coordinates for cell %d in the form 'x y': ", i+1);
-        scanf("%d %d", &x, &y);
+        printw("Enter coordinates for cell %d in the form 'x y': ", i+1);
+        scanw("%d %d", &x, &y);
         table[x][y].current = 1;
         
 
@@ -21,9 +21,10 @@ void life_cell(struct cell table[ROWS][COLUMNS], int amount){
     {
         for (int j = 1; j < COLUMNS - 1; j++)
         {
-          printf("%d ",table[i][j].current);  
+          printw("%d ",table[i][j].current);  
         }
-        printf("\n");}
+        printw("\n");
+    }
 }
 
 /*********************************************************************
@@ -42,7 +43,14 @@ void life_calculate(struct cell table[ROWS][COLUMNS]){
         {
            
            int n = 0; 
-            n = table[i+1][j-1].current + table[i+1][j].current + table[i+1][j+1].current + table[i][j-1].current + table[i][j+1].current + table[i-1][j-1].current + table[i-1][j].current + table[i-1][j+1].current;
+            n = table[i+1][j-1].current + 
+                table[i+1][j  ].current + 
+                table[i+1][j+1].current + 
+                table[i  ][j-1].current + 
+                table[i  ][j+1].current + 
+                table[i-1][j-1].current +
+                table[i-1][j  ].current + 
+                table[i-1][j+1].current;
                 
 
             if(table[i][j].current == 1)
