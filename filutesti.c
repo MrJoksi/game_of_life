@@ -81,7 +81,7 @@ int file_read_enemy(struct cell table[ROWS][COLUMNS]){
                 {
                 r++;
                 c = 0;
-                fscanf(fptr, "%c", &state_c);
+                fscanf(fptr, "%c", &state_c); 
                 }
         }
         fclose(fptr);

@@ -109,6 +109,7 @@ int main(){
             }
             else if(table[i][j].enemy == 1)
             {
+              move(i,j);
               attron(COLOR_PAIR(4));
               printw("#");
               attroff(COLOR_PAIR(4));
