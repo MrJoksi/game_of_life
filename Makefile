@@ -5,7 +5,7 @@ TARGET = game_of_life
 all: $(TARGET) clean_o
 
 $(TARGET): $(OBJECTS) 
-	$(CC) $(OBJECTS) -lncursesw -o $(TARGET)
+	$(CC) $(OBJECTS) -lncurses -o $(TARGET)
 cellif.o: cellif.c variables.h
 	$(CC) -c cellif.c
 game_of_life.o: game_of_life.c variables.h
@@ -16,4 +16,3 @@ clean: clean_o
 	rm -f *.exe $(TARGET)
 clean_o:
 	rm -f *.o  
-

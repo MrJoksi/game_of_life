@@ -2,7 +2,7 @@
 /*********************************************************************
  NAME:life_cell
  DESCRIPTION:asks user place of cells
-	Input:table[BOARD_SIZE][BOARD_SIZE]
+	Input:table[ROWS][COLUMNS]
 	Output:
   Used global variables: BOARD_SIZE
  REMARKS when using this function:
@@ -21,25 +21,41 @@ void life_cell(struct cell table[ROWS][COLUMNS], int amount){
         refresh();
         move(3,10);
         printw("                                  ");
+        refresh();
         move(4,10);
         printw("                                    ");
         refresh();
         table[x][y].current = 1;
     }
-    for (int i = 1; i < ROWS - 1; i++)
+    /*for (int i = 1; i < ROWS - 1; i++)
     {
         for (int j = 1; j < COLUMNS - 1; j++)
         {
-          printw("%d ",table[i][j].current);  
+          printw("%d ",table[i][j].current);
+          refresh();  
         }
         printw("\n");
+        refresh();
+    }*/
+}
+
+int creature_placement(struct cell table[ROWS][COLUMNS])
+{
+    for (int i = 1; i < ROWS - 1; i++)
+    {
+        for (int j = 1; j <= COLUMNS - 1; j++)
+        {
+            
+
+        }
+        
     }
 }
 
 /*********************************************************************
  NAME:life_calculate
  DESCRIPTION:caculates neigbourgh cells
-	Input:table[BOARD_SIZE][BOARD_SIZE]
+	Input:table[ROWS][COLUMNS]
 	Output:NONE
   Used global variables:BOARD_SIZE , GAME_SIZE
  REMARKS when using this function:
@@ -50,7 +66,7 @@ void life_calculate(struct cell table[ROWS][COLUMNS]){
     {
         for (int j = 1; j <= COLUMNS - 1; j++)
         {
-           
+           int f = 0;
            int n = 0; 
             n = table[i+1][j-1].current + 
                 table[i+1][j  ].current + 
@@ -60,34 +76,80 @@ void life_calculate(struct cell table[ROWS][COLUMNS]){
                 table[i-1][j-1].current +
                 table[i-1][j  ].current + 
                 table[i-1][j+1].current;
-                
 
-            if(table[i][j].current == 1)
+            f = table[i+1][j-1].enemy + 
+                table[i+1][j  ].enemy + 
+                table[i+1][j+1].enemy + 
+                table[i  ][j-1].enemy + 
+                table[i  ][j+1].enemy + 
+                table[i-1][j-1].enemy +
+                table[i-1][j  ].enemy + 
+                table[i-1][j+1].enemy;
+                           
+            if(table[i][j].land == 1)
             {
-                if(n > 3)
+                if(table[i][j].current == 1)
                 {
-                    table[i][j].future = 0;
-                } 
-                 else if (n < 2)
+                    if(n > 3 || n < 2 || f >= 1)
+                    {
+                        table[i][j].future = 0;
+                    } 
+
+                    else if (n == 2 || n == 3 || f == 0)
+                    {
+                        table[i][j].future = 1;
+                    }
+                }  
+
+                else if(table[i][j].current == 0)
                 {
-                     table[i][j].future = 0;
+                    if (n == 2|| n == 3)
+                    {
+                         table[i][j].future = 1;
+                    }
+                    else if(f > 0)
+                    {
+                        table[i][j].future = 0;
+                    }
+                    
                 }
-                else if (n == 2 || n == 3){
 
-                    table[i][j].future = 1;
+                if(table[i][j].enemy == 1)
+                {
+                    if(table[i][j].enemy == table[i][j].current)
+                    {
+                        table[i][j].future = 0;
+                    }
+                    if(f > 2 || f < 1)
+                    {
+                        table[i][j].enemyfuture = 0;
+                    }
+                    else if(f > 1)
+                    {
+                        table[i][j].enemyfuture = 1;
+                    }
+                    
                 }
-            }  
+                else if(table[i][j].enemy == 0)
+                {
+                    if(f > 1)
+                    {
+                        table[i][j].enemyfuture = 1;
+                    }
+                    else{
+                        table[i][j].enemyfuture = 0;
+                    }
+                }
 
-            else if(table[i][j].current == 0)
+            else if(table[i][j].land == 0)
             {
-                if (n == 3)
-                {
-                    table[i][j].future = 1;
-                }
-                else{
-                    table[i][j].future = 0;
-                }
+                table[i][j].future = 0;
+                table[i][j].enemyfuture = 0;
             }
+            }
+
+            
+            
         }
     }
     
@@ -96,6 +158,7 @@ void life_calculate(struct cell table[ROWS][COLUMNS]){
         for (int j = 1; j <= COLUMNS - 1; j++)
         {
         table[i][j].current = table[i][j].future;
+        table[i][j].enemy = table[i][j].enemyfuture;
         }
     }
 }
@@ -141,8 +204,5 @@ else if(table[i][j].current == 0)
             table[i][j].current = table[i][j].future;
         }
     }
-
-
-
 
 */

@@ -41,14 +41,18 @@
 **********************************************************************/
 int main(){
 
-    struct cell table[ROWS][COLUMNS] = {0,0};
+    struct cell table[ROWS][COLUMNS] = {0};
     int amount;
     char ab;
     initscr();
     clear();
+    start_color();
     init_pair(1,COLOR_WHITE,COLOR_BLACK);
     init_pair(2,COLOR_RED,COLOR_GREEN);
+    init_pair(3,COLOR_BLUE,COLOR_BLUE);
+    init_pair(4,COLOR_BLACK,COLOR_GREEN);
     bkgd(COLOR_PAIR(1));
+    file_read_map(table);
     move(2,10);
     printw("Read from file: A ");
     move(3,10);
@@ -74,34 +78,69 @@ int main(){
       }
     else if (ab == 'A' || ab == 'a')
     {
-      file_read(table);
-    }
+      file_read_cell(table);
+      file_read_enemy(table);
+    } 
+    char cont;
+    clear();
     
-    while(1){
+    nodelay(stdscr, TRUE);
+    while(cont != 'x')
+    {
+      
       curs_set(0);
-      bkgd(COLOR_PAIR(2));
+       
+      move(1,1);
         
     for (int i = 1; i < ROWS; i++)
-    {
+      {
         for (int j = 1; j < COLUMNS; j++)
         {
-          if(table[i][j].current == 1){
-          printw("#");
+          move(i,j);
+          
+          if(table[i][j].land == 1)
+          {
+            if(table[i][j].current == 1)
+            {
+              attron(COLOR_PAIR(2));
+              printw("*");
+              attroff(COLOR_PAIR(2));
+              refresh();
+            }
+            else if(table[i][j].enemy == 1)
+            {
+              attron(COLOR_PAIR(4));
+              printw("#");
+              attroff(COLOR_PAIR(4));
+              refresh();
+            }
+            else if(table[i][j].current == 0 && table[i][j].enemy == 0)
+            {
+              attron(COLOR_PAIR(2));
+              printw(" ");
+              attroff(COLOR_PAIR(2));
+              refresh();
+            }
           }
-          else{
-            printw("   ");
+
+          else if(table[i][j].land == 0){
+              attron(COLOR_PAIR(3));
+              printw(" ");
+              attroff(COLOR_PAIR(3));
+              refresh();
+            }
           }
         }
-        printw("\n");
+      //move(0 + i,1);
+      refresh();
+      //clear();
+      sleep(1);
+      life_calculate(table);
+      cont = getch(); 
     }
-    
-    usleep(5000000);
-    life_calculate(table);
-    
 
-    }
+
     nodelay(stdscr, FALSE);
-    getch();  
+    getch(); 
     endwin();
 }
-
